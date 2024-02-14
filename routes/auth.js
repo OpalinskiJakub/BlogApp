@@ -44,13 +44,14 @@ var router = express.Router();
 
 
 router.get('/login', function(req, res, next) {
-    res.render('login');
+    res.render('public/login');
 });
 
 router.post('/login/password', passport.authenticate('local', {
-    successRedirect: '/hello',
+
+    successRedirect: '/auth',
     failureRedirect: '/login'
-}));
+}) );
 
 router.post('/logout', function(req, res, next) {
     req.logout(function(err) {
@@ -61,7 +62,7 @@ router.post('/logout', function(req, res, next) {
 
 
 router.get('/signup', function(req, res, next) {
-res.render('signup');
+res.render('public/signup');
 });
 
 router.post('/signup', function(req, res, next) {

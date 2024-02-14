@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var publicRoutes = require('./public/publicRoutes');
 
 
 
@@ -18,9 +18,6 @@ const posts = [
   { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." }
 ];
 
-router.get('/', (req, res) => {
-  res.render('index', { posts: posts });
-});
 
 module.exports = router;
 
@@ -35,3 +32,8 @@ router.get('/hello', function(req, res, next) {
 
 
 });
+
+
+
+
+module.exports=router;

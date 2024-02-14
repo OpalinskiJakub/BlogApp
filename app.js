@@ -7,7 +7,8 @@ var logger = require('morgan');
 var logger = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
-
+var publicRoutes = require('./routes/public/publicRoutes');
+var privateRoutes = require('./routes/private/privateRoutes');
 
 const MySQLStore = require('express-mysql-session')(session);
 const mysql = require('mysql2');
@@ -19,7 +20,9 @@ var authRouter = require('./routes/auth');
 
 var app = express();
 
-// view engine setup
+app.use(publicRoutes);
+app.use(privateRoutes);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

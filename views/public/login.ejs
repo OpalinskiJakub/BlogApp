@@ -15,17 +15,18 @@
             <div class="card bg-dark text-white">
                 <div class="card-body">
                     <h4 class="card-title">Sign in</h4>
-                    <form>
+                    <form action="/login/password" method="post">
                         <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Adres Email</label>
-                            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp">
+                            <label for="loginEmail" class="form-label">Username</label>
+                            <input class="form-control" id="username" name="username" type="text" autocomplete="username" required autofocus>
                         </div>
                         <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Hasło</label>
-                            <input type="password" class="form-control" id="loginPassword">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input  class="form-control" id="current-password" name="password" type="password" autocomplete="current-password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Sign in</button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -33,6 +34,7 @@
 </div>
 
 <%- include('partials/footer') %>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
