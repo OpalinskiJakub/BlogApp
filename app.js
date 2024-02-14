@@ -4,8 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var logger = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
+
+
+const MySQLStore = require('express-mysql-session')(session);
+const mysql = require('mysql2');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -19,8 +29,33 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+const options = {
+  host: 'localhost',
+  port: 2115,
+  user: 'jakub',
+  password: 'user',
+  database: 'blogAppDataBase'
+};
+const sessionStore = new MySQLStore(options);
+
+// Configure session middleware to use MySQL session store
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore
+}));
+
+app.use(passport.authenticate('session'));
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/', indexRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
