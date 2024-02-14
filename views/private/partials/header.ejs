@@ -14,13 +14,34 @@
                         <a class="nav-link" href="/auth/userPosts">Your posts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/userData">Your data</a>
+                        <a class="nav-link" href="/auth/userPanel">Your data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logut">Logout</a>
+                        <a id="logoutLink" class="nav-link" >Logout</a>
                     </li>
+
                 </ul>
             </div>
         </div>
     </nav>
+    <script>
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            fetch('/logout', {
+                method: 'POST'
+
+            })
+                .then(response => {
+                    if (response.ok) {
+
+                        window.location.href = '/';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
 </header>

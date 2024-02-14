@@ -19,8 +19,48 @@ const posts = [
 
 
 
-router.get('/auth', function(req, res, next) {
-    res.render('private/index',{ posts: posts });
+router.get('/', function(req, res, next) {
+
+    if(req.isAuthenticated()){
+        res.render('private/index',{ posts: posts });
+    }else {
+        res.redirect('/login')
+    }
 });
+router.get('/createPost', function(req, res, next) {
+
+    if(req.isAuthenticated()){
+        res.render('private/postCreatePanel');
+    }else {
+        res.redirect('/login')
+    }
+});
+router.get('/userPosts', function(req, res, next) {
+
+    if(req.isAuthenticated()){
+        res.render('private/userPosts',{ posts: posts });
+    }else {
+        res.redirect('/login')
+    }
+});
+
+router.get('/userPanel', function(req, res, next) {
+
+    if(req.isAuthenticated()){
+        res.render('private/userPanel',{ posts: posts });
+    }else {
+        res.redirect('/login')
+    }
+});
+
+router.get('/postPanel', function(req, res, next) {
+
+    if(req.isAuthenticated()){
+        res.render('private/index',{ posts: posts });
+    }else {
+        res.redirect('/login')
+    }
+});
+
 
 module.exports = router;
