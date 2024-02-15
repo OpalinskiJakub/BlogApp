@@ -1,4 +1,5 @@
 var express = require('express');
+const db = require("../db");
 var router = express.Router();
 
 
@@ -6,21 +7,33 @@ var router = express.Router();
 
 
 
-const posts = [
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." }
-];
+router.get('/', function (req, res, next) {
 
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.render('public/indexPreview',{ posts: posts });
+        db.query('SELECT * FROM posts JOIN users ON posts.authorId=users.id;  ', (err, results) => {
+            if (err) throw err;
+
+
+            res.render('public/indexPreview', {posts: results});
+        });
+
+});
+
+router.get('/post/:id', (req, res) => {
+    const postId = req.params.id;
+
+
+    const query = 'SELECT * FROM posts JOIN users ON posts.authorId=users.id WHERE postId = ?';
+    db.query(query, [postId], (err, results) => {
+        if (err) throw err;
+
+        if (results.length > 0) {
+            const post = results[0];
+            res.render('public/postPanelPreview', {post: post});
+        } else {
+            res.send('Not Found');
+        }
+    });
 });
 
 module.exports = router;

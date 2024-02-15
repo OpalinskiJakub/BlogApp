@@ -11,11 +11,11 @@ const db = mysql.createConnection({
 });
 
 
-
 var queryFirstUser = `INSERT INTO users (username, hashed_password, salt)
-VALUES (?, ?, ?)
-ON DUPLICATE KEY UPDATE
-username = VALUES(username);`;
+                      VALUES (?, ?, ?) ON DUPLICATE KEY
+UPDATE
+    username =
+VALUES (username);`;
 
 var salt = crypto.randomBytes(16);
 
@@ -27,7 +27,7 @@ db.query(queryFirstUser, [
     'alice',
     hashedPassword,
     salt
-], function(err, results) {
+], function (err, results) {
     if (err) {
         console.error('Error inserting user:', err);
         return;

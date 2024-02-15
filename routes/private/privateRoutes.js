@@ -3,54 +3,46 @@ var router = express.Router();
 var db = require('../db');
 
 
-
-
-
 const posts = [
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." },
-    { title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca." },
-    { title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków." }
+    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
+    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
+    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
+    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
+    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
+    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
+    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
+    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."}
 ];
 
 
+router.get('/', function (req, res, next) {
 
-router.get('/', function(req, res, next) {
-
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         db.query('SELECT * FROM posts JOIN users ON posts.authorId=users.id;  ', (err, results) => {
             if (err) throw err;
 
 
-            res.render('private/index', { posts: results });
+            res.render('private/index', {posts: results});
         });
         console.log(req.user);
-    }else {
+    } else {
         res.redirect('/login')
     }
 
 });
 
 
+router.get('/createPost', function (req, res, next) {
 
-
-
-
-router.get('/createPost', function(req, res, next) {
-
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         res.render('private/postCreatePanel');
-    }else {
+    } else {
         res.redirect('/login')
     }
 });
 router.post('/createPost', (req, res) => {
-    const { postTitle, postContent} = req.body;
-    const authorId  = req.user.id;
+    const {postTitle, postContent} = req.body;
+    const authorId = req.user.id;
     if (!postTitle || !postContent || !authorId) {
         return res.status(400);
     }
@@ -66,11 +58,6 @@ router.post('/createPost', (req, res) => {
 });
 
 
-
-
-
-
-
 router.get('/userPosts', (req, res) => {
     const userId = req.user.id;
 
@@ -81,14 +68,13 @@ router.get('/userPosts', (req, res) => {
             return res.status(500);
         }
 
-        res.render('private/userPosts',{ posts: results });
+        res.render('private/userPosts', {posts: results});
 
     });
 });
 
 router.delete('/post/:postId', (req, res) => {
     const postId = req.params.postId;
-    console.log("tutaj")
     const query = 'DELETE FROM posts WHERE postId = ?';
     db.query(query, [postId], (err, result) => {
         if (err) {
@@ -98,17 +84,14 @@ router.delete('/post/:postId', (req, res) => {
         res.status(200);
 
     });
-    res.redirect('/');
 });
 
 
+router.get('/userPanel', function (req, res, next) {
 
-
-router.get('/userPanel', function(req, res, next) {
-
-    if(req.isAuthenticated()){
-        res.render('private/userPanel',{ posts: posts });
-    }else {
+    if (req.isAuthenticated()) {
+        res.render('private/userPanel', {posts: posts});
+    } else {
         res.redirect('/login')
     }
 });
@@ -124,7 +107,7 @@ router.get('/post/:id', (req, res) => {
 
         if (results.length > 0) {
             const post = results[0];
-            res.render('private/postPanel', { post: post });
+            res.render('private/postPanel', {post: post});
         } else {
             res.send('Not Found');
         }

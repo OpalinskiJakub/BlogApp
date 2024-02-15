@@ -12,10 +12,10 @@ var privateRoutes = require('./routes/private/privateRoutes');
 
 const MySQLStore = require('express-mysql-session')(session);
 const mysql = require('mysql2');
-var indexRouter = require('./routes/index');
+
 var usersRouter = require('./routes/users');
 
-var indexRouter = require('./routes/index');
+
 var authRouter = require('./routes/auth');
 
 var app = express();
@@ -42,7 +42,7 @@ const options = {
 };
 const sessionStore = new MySQLStore(options);
 
-// Configure session middleware to use MySQL session store
+
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -53,14 +53,14 @@ app.use(session({
 app.use(passport.authenticate('session'));
 
 
-app.use('/', indexRouter);
+
 app.use('/users', usersRouter);
 
-app.use('/', indexRouter);
+
 app.use('/', authRouter);
 app.use('/',publicRoutes);
 app.use('/auth',privateRoutes);
-// catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

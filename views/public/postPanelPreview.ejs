@@ -11,22 +11,12 @@
 <%- include('partials/header') %>
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card bg-dark text-white">
                 <div class="card-body">
-                    <h4 class="card-title">Utwórz post</h4>
-                    <form action="/auth/createPost" method="post">
-                        <div class="mb-3">
-                            <label for="postTitle" class="form-label">Title:</label>
-                            <input class="form-control" type="text" id="postTitle" name="postTitle" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="postContent" class="form-label">Content:</label>
-                            <textarea class="form-control" id="postContent" name="postContent" rows="4"
-                                      required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create post</button>
-                    </form>
+                    <h4><%= post.postTitle %></h4>
+                    <h5><%= post.username %></h5>
+                    <p><%= post.postContent %></p>
                 </div>
             </div>
         </div>

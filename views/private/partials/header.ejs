@@ -2,7 +2,8 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/auth">Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -17,7 +18,7 @@
                         <a class="nav-link" href="/auth/userPanel">Your data</a>
                     </li>
                     <li class="nav-item">
-                        <a id="logoutLink" class="nav-link" >Logout</a>
+                        <a id="logoutLink" class="nav-link">Logout</a>
                     </li>
 
                 </ul>
@@ -25,7 +26,7 @@
         </div>
     </nav>
     <script>
-        document.getElementById('logoutLink').addEventListener('click', function(e) {
+        document.getElementById('logoutLink').addEventListener('click', function (e) {
             e.preventDefault();
 
             fetch('/logout', {
