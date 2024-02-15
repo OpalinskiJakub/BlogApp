@@ -3,18 +3,6 @@ var router = express.Router();
 var db = require('../db');
 
 
-const posts = [
-    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
-    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
-    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
-    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
-    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
-    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."},
-    {title: "Tytuł posta 1", content: "Zawartość posta 1, która jest naprawdę interesująca i wciągająca."},
-    {title: "Tytuł posta 2", content: "Zawartość posta 2, zawierająca wiele ciekawych informacji i wniosków."}
-];
-
-
 router.get('/', function (req, res, next) {
 
     if (req.isAuthenticated()) {
@@ -87,14 +75,48 @@ router.delete('/post/:postId', (req, res) => {
 });
 
 
-router.get('/userPanel', function (req, res, next) {
+/*router.get('/userPanel', function (req, res, next) {
 
     if (req.isAuthenticated()) {
         res.render('private/userPanel', {posts: posts});
     } else {
         res.redirect('/login')
     }
+});*/
+
+
+router.get('/userPanel', (req, res) => {
+    const userId = req.user.id;
+    const query = 'SELECT * FROM users WHERE id = ?';
+
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Błąd serwera');
+        }
+        if (result.length > 0) {
+            res.render('private/userPanel', { user: result[0] });
+        } else {
+            res.status(404);
+        }
+    });
 });
+
+router.post('/usernameUpdate/', (req, res) => {
+    const userId = req.user.id;
+    const { newUsername } = req.body;
+
+    const query = 'UPDATE users SET username = ? WHERE id = ?';
+    db.query(query, [newUsername, userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500);
+        }
+
+        res.redirect('/auth/userPanel');
+    });
+});
+
 
 
 router.get('/post/:id', (req, res) => {

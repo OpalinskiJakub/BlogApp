@@ -7,12 +7,12 @@ var crypto = require('crypto');
 var db = require('./db');
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
-    // Corrected to use `query` method instead of `get`
+
     db.query('SELECT * FROM users WHERE username = ?', [username], function (err, results) {
         if (err) {
             return cb(err);
         }
-        // The `mysql` and `mysql2` packages return an array of results
+
         const row = results[0];
         if (!row) {
             return cb(null, false, {message: 'Incorrect username or password.'});
@@ -22,8 +22,8 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
             if (err) {
                 return cb(err);
             }
-            // Need to ensure both `hashed_password` and `hashedPassword` are Buffers before using `crypto.timingSafeEqual`
-            const dbHashedPassword = Buffer.from(row.hashed_password, 'binary'); // Assuming `hashed_password` is stored in a compatible format
+
+            const dbHashedPassword = Buffer.from(row.hashed_password, 'binary');
             if (!crypto.timingSafeEqual(dbHashedPassword, hashedPassword)) {
                 return cb(null, false, {message: 'Incorrect username or password.'});
             }

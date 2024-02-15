@@ -13,15 +13,21 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bg-dark mt-3">
-                <h5 class="card-header" style="color: white">Featured</h5>
+                <h5 class="card-header" style="color: white">User data:</h5>
 
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-dark text-white" style="border-width: 2px;">An item</li>
-                        <li class="list-group-item bg-dark text-white" style="border-width: 2px;">A second item</li>
-                        <li class="list-group-item bg-dark text-white" style="border-width: 2px;">A third item</li>
+                        <li class="list-group-item bg-dark text-white" style="border-width: 2px;">Id: <%= user.id %></li>
+                        <li class="list-group-item bg-dark text-white" style="border-width: 2px;">Username: <%= user.username %>
+                            <form action="/auth/usernameUpdate" method="POST">
+                                <label for="newUsername">New username:</label>
+                                <input type="text" id="newUsername" name="newUsername" required>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </form></li>
+
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
