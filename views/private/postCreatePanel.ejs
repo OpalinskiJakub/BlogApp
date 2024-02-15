@@ -15,25 +15,16 @@
             <div class="card bg-dark text-white">
                 <div class="card-body">
                     <h4 class="card-title">Utwórz post</h4>
-                    <form>
+                    <form action="/auth/createPost" method="post">
                         <div class="mb-3">
-                            <label for="postTitle" class="form-label">Tytuł</label>
-                            <input type="text" class="form-control" id="postTitle">
+                            <label for="postTitle" class="form-label">Title:</label>
+                            <input class="form-control" type="text" id="postTitle" name="postTitle" required>
                         </div>
                         <div class="mb-3">
-                            <label for="postBody" class="form-label">Treść</label>
-                            <textarea class="form-control" id="postBody" rows="3"></textarea>
+                            <label for="postContent" class="form-label">Content:</label>
+                            <textarea class="form-control"id="postContent" name="postContent" rows="4" required></textarea>
                         </div>
-                        <div class="mb-3">
-                            <label for="postCategory" class="form-label">Kategoria</label>
-                            <select class="form-control" id="postCategory">
-                                <option>Technologia</option>
-                                <option>Edukacja</option>
-                                <option>Podróże</option>
-                                <!-- Dodaj więcej kategorii według potrzeb -->
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Opublikuj</button>
+                        <button type="submit" class="btn btn-primary">Create post</button>
                     </form>
                 </div>
             </div>

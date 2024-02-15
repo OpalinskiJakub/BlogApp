@@ -19,21 +19,28 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card bg-dark mt-3">
-                        <h5 class="card-header" style="color: white">Featured</h5>
+                        <h5 class="card-header" style="color: white">Your posts:</h5>
 
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                <% posts.forEach(post => { %>
+                                <% if (posts.length > 0) { %>
+                                    <% posts.forEach(post => { %>
 
-                                    <a href="#" class="list-group-item bg-dark text-white" style="margin-top: 2%">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-0">Post 1</h6>
+                                        <li class="list-group-item bg-dark text-white "
+                                            style="margin-top: 2%; border-width:2px;border-color: black">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1"><%= post.postTitle %></h5>
+                                            </div>
+                                            <p class="mb-1"><%= post.username %></p>
 
-                                        </div>
+                                            <a class="btn btn-primary" href="/auth/post/<%= post.postId %>">View Post</a>
+                                            <button id="deletePostBtn"  data-post-id="<%= post.postId %>"  class="btn btn-danger">Usuń</button>
+                                        </li>
 
-                                    </a>
-                                    <button class="btn btn-danger col-md-3">Usuń</button>
-                                <% }) %>
+                                    <% }) %>
+                                <% } else { %>
+                                    <p style="color: white">No posts</p>
+                                <% } %>
                             </ul>
 
                         </div>
@@ -50,6 +57,23 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('deletePostBtn').addEventListener('click', function() {
+        const postId = this.getAttribute('data-post-id');
+
+        fetch(`/auth/post/${postId}`, { method: 'DELETE' })
+            .then(response => {
+                window.location.href = '/auth';
+            })
+            .catch(error => {
+                window.location.href = '/auth';
+            });
+    });
+</script>
+
+
+
+
 </body>
 </html>
 

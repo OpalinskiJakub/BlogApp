@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
 <%- include('partials/header') %>
@@ -13,37 +13,42 @@
 <div class="container flex-fill">
 
 
-  <main style="margin-bottom: 5%">
+    <main style="margin-bottom: 5%">
 
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-12">
-          <div class="card bg-dark mt-3">
-            <h5 class="card-header" style="color: white">Featured</h5>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card bg-dark mt-3">
+                        <h5 class="card-header" style="color: white">Featured</h5>
 
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <% if (posts.length > 0) { %>
+                                    <% posts.forEach(post => { %>
 
-                <% posts.forEach(post => { %>
-                  <a href="#" class="list-group-item bg-dark text-white" style="margin-top: 2%">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">List group item heading</h5>
-                      <small class="text-body-secondary">3 days ago</small>
+                                        <li class="list-group-item bg-dark text-white "
+                                            style="margin-top: 2%; border-width:2px;border-color: black">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1"><%= post.postTitle %></h5>
+                                            </div>
+                                            <p class="mb-1"><%= post.username %></p>
+
+                                            <a class="btn btn-primary" href="/auth/post/<%= post.postId %>">View Post</a>
+                                        </li>
+
+                                    <% }) %>
+                                <% } else { %>
+                                    <p style="color: white">No posts</p>
+                                <% } %>
+                            </ul>
+                        </div>
                     </div>
-                    <p class="mb-1">Some placeholder content in a paragraph.</p>
-                    <small class="text-body-secondary">And some muted small print.</small>
-                  </a>
-                <% }) %>
-
-              </ul>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
 
 
-  </main>
+    </main>
 
 
 </div>
